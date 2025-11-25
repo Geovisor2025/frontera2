@@ -21,7 +21,7 @@ var style_LIMITEMUNICIPAL_12 = function(feature, resolution){
         labelText = String(feature.get("mpio"));
     }
     var style = [ new ol.style.Style({
-        stroke: new ol.style.Stroke({color: 'rgba(255,2,250,0.3)', lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0.988}),fill: new ol.style.Fill({color: 'rgba(223,19,111,0.0)'}),
+        stroke: new ol.style.Stroke({color: 'rgba(255,2,250,0.3)', lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 2.508}),fill: new ol.style.Fill({color: 'rgba(223,19,111,0.0)'}),
         text: createTextStyle(feature, resolution, labelText, labelFont,
                               labelFill, placement, bufferColor,
                               bufferWidth)
