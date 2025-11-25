@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/horsey.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/ol-search-layer.min.css">
+        <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+          <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        html, body, #map {
+            width: 100%;
+            height: 96.5%;
+            padding: 0;
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .ol-control > * {
+            background-color: #f8f8f8 !important;
+            color: #1f78b4 !important;
+            border-radius: 0;
+        }
+
+        .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 2px !important;
+        }
+
+        .opacity-control {
+    position: fixed;       /* ⬅ Fijo en la pantalla */
+    left: 20px;            /* ⬅ A la izquierda */
+    background: #e0e0e0;
+    border-radius: 16px;
+    padding: 12px 20px;
+    z-index: 1500;         /* encima del mapa */
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 3px 3px 6px #bebebe, -1px -1px 3px #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 210px;
+}
+
+/* Ubicación abajo izquierda */
+#opacityBox1 {
+    bottom: 110px;    /* la de arriba */
+}
+
+#opacityBox2 {
+    bottom: 20px;     /* la de abajo */
+}
+
+        #header {
+            width: 100%;
+            height: 90.4px;
+            overflow: hidden;
+        }
+
+        #header-img {
+            width: 100%;
+            height: 96.7%;
+            object-fit: cover;
+        }
+
+        .bottom-left-image {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 13em;
+            height: auto;
+            z-index: 2000;
+            opacity: 0.8;
+        }
+    </style>
+
+    <title>Censo Agropecuario</title>
+</head>
+
+<body>
+
+<header id="header">
+    <img src="images/carto.png" alt="Censo Agropecuario 2026" id="header-img">
+</header>
+
+<div id="map">
+    <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+    </div>
+</div>
+
+<!-- BARRA DE TRANSPARENCIA 1 -->
+<div class="opacity-control" id="opacityBox1">
+    <label for="opacityRange1">Transparencia ABAs</label>
+    <input type="range" id="opacityRange1" min="0" max="1" step="0.1" value="1">
+</div>
+
+<!-- BARRA DE TRANSPARENCIA 2 -->
+<div class="opacity-control" id="opacityBox2">
+    <label for="opacityRange2">Transparencia Clasificación</label>
+    <input type="range" id="opacityRange2" min="0" max="1" step="0.1" value="1">
+</div>
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="resources/horsey.min.js"></script>
+        <script src="resources/ol-search-layer.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="resources/photon-geocoder-autocomplete.min.js"></script>
+        <script src="layers/AREA_DESAGUADERO_1.js"></script><script src="layers/AREA_BERMEJO_2.js"></script><script src="layers/LIMITENACIONAL_3.js"></script><script src="layers/CA_PERIMETROS_ABAS_ASISTIDO_4.js"></script><script src="layers/CENTROSPOBLADOS_5.js"></script><script src="layers/ABAS_LIMITES_2_6.js"></script><script src="layers/ABAS_LIMITES_1_7.js"></script><script src="layers/ABAS_COCA_LIMITE_8.js"></script><script src="layers/ABAS_COCA_3_9.js"></script><script src="layers/ABAS_COCA_2_10.js"></script><script src="layers/ABAS_COCA_1_11.js"></script><script src="layers/LIMITEMUNICIPAL_12.js"></script><script src="layers/DEPARTAMENTO_13.js"></script><script src="layers/FRANJAFRONTERA50KM_14.js"></script><script src="layers/MARCODELISTA_15.js"></script><script src="layers/P_49Amanzanado_16.js"></script><script src="layers/P_49Disperso_17.js"></script>
+        <script src="styles/AREA_DESAGUADERO_1_style.js"></script><script src="styles/AREA_BERMEJO_2_style.js"></script><script src="styles/LIMITENACIONAL_3_style.js"></script><script src="styles/CA_PERIMETROS_ABAS_ASISTIDO_4_style.js"></script><script src="styles/CENTROSPOBLADOS_5_style.js"></script><script src="styles/ABAS_LIMITES_2_6_style.js"></script><script src="styles/ABAS_LIMITES_1_7_style.js"></script><script src="styles/ABAS_COCA_LIMITE_8_style.js"></script><script src="styles/ABAS_COCA_3_9_style.js"></script><script src="styles/ABAS_COCA_2_10_style.js"></script><script src="styles/ABAS_COCA_1_11_style.js"></script><script src="styles/LIMITEMUNICIPAL_12_style.js"></script><script src="styles/DEPARTAMENTO_13_style.js"></script><script src="styles/FRANJAFRONTERA50KM_14_style.js"></script><script src="styles/MARCODELISTA_15_style.js"></script><script src="styles/P_49Amanzanado_16_style.js"></script><script src="styles/P_49Disperso_17_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
+
+
+        <!-- CONTROLADORES DE OPACIDAD -->
+<script>
+    // Sliders
+    const slider1 = document.getElementById('opacityRange1');
+    const slider2 = document.getElementById('opacityRange2');
+
+    // Grupo de capas 1 (puedes modificarlo si quieres)
+    const group1Layers = [
+        lyr_CA_PERIMETROS_ABAS_ASISTIDO_4,
+        lyr_ABAS_LIMITES_2_6,
+        lyr_ABAS_LIMITES_1_7,
+        lyr_ABAS_COCA_LIMITE_8,
+        lyr_ABAS_COCA_3_9,
+        lyr_ABAS_COCA_2_10,
+        lyr_ABAS_COCA_1_11
+    ];
+
+    // Grupo de capas 2 (puedes modificarlo si quieres)
+    const group2Layers = [
+        lyr_AREA_DESAGUADERO_1,
+        lyr_AREA_BERMEJO_2
+    ];
+
+    slider1.addEventListener('input', function () {
+        const value = parseFloat(this.value);
+        group1Layers.forEach(layer => layer.setOpacity(value));
+    });
+
+    slider2.addEventListener('input', function () {
+        const value = parseFloat(this.value);
+        group2Layers.forEach(layer => layer.setOpacity(value));
+    });
+</script>
+
+    </body>
+</html>
